@@ -12,6 +12,8 @@ let n = 1;
 //템플릿 문자열
 console.log(`${n}`);
 
+
+//해체 할당
 const obj = { b: 2, c:3,d:4};
 
 const{a,b,c} = obj;
