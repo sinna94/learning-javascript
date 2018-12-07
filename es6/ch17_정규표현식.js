@@ -120,7 +120,40 @@ html = html.replace(/<a .*?(class=".*?").*?(href=".*?").*?>/, '<a $2 $1>');
 console.log(html);
 
 input = "One two three";
-console.log(input.replace(/two/, '($`)'));
-console.log(input.replace(/two/, '($&)'));
-console.log(input.replace(/two/, "($')"));
-console.log(input.replace(/two/, '($$)'));
+console.log(input.replace(/two/, '($`)'));  // $` : 일치하는 것 앞에 있는 전부를 참조
+console.log(input.replace(/two/, '($&)'));  // $& : 일치하는 것 자체
+console.log(input.replace(/two/, "($')"));  // $' : 일치하는 것 뒤에 있는 전부를 참조
+console.log(input.replace(/two/, '($$)'));  // $$ : 달러 기호 자체가 필요할 때
+
+//함수를 이용한 교체
+htlm = `<a class="foo" href="/foo" id="foo">Foo</a>\n`+
+        `<A href='/bar' Class="bar">Bar</a>\n`+
+        `<a href="/baz">Baz</a>\n`+
+        `<a onclick="javascript:alert('aux!')" href="/qux">Qux</a>`;
+
+function sanitizeATag(aTag){
+    //태그에서 원하는 부분 뽑아내기
+    const parts = aTag.match(/<a\s+(.*?)>(.*?)<\/a>/i);
+
+    //속성 분해
+    const attributes = parts[1].split(/\s+/);
+
+    return '<a ' + attributes
+    // class, id, href 속성만 필요하다
+    .filter(attr => /^(?:class|id|href)[\s=]/i.test(attr))
+    //스페이스 한 칸으로 구분해서 합친다.
+    .join(' ')
+    //여는 <a> 태그를 완성한다.
+    +'>'
+    //텍스트를 추가한다.
+    + parts[2]
+    //마지막으로 태그를 닫는다.
+    + '</a>';
+}
+//<a> 태그를 찾는 정규식
+html.match(/<a .*?>(.*?)<\/a>/ig);
+output=html.replace(/<a .*?>(.*?)<\/a>/ig, function(m, g1, offset){
+    console.log(`<a> tag found at ${offset}. contents: ${g1}`);
+});
+output = html.replace(/<a .*?<\/a>/ig, function(m){
+    return sanitizeATag(m);
