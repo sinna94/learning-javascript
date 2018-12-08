@@ -29,7 +29,7 @@ document.createElement('p');
 
     이벤트 핸들러가 어떻게 호출될지 영향을 주는 세가지 방법
     1. preventDefault : 이벤트를 취소한다. 
-    취소된 이벤트는 계속 전달 되지만 
+    취소된 이벤트는 계속 전달 되지만 1
     defaultPrevented 프로퍼티가 true로 바뀐 채 전달됨
 
     2. stopPropagation : 이벤트를 현재 요소에서 끝내고 더는 전달되지 않게 막는다.
@@ -38,3 +38,4 @@ document.createElement('p');
     현재 요소에 연결된 핸들러도 동작하지 않게 막는다.
 
 */
+

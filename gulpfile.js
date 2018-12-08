@@ -5,6 +5,7 @@ const eslint = require('gulp-eslint');
 
 gulp.task('default', function() {
     //ESLint 실행
+    
     gulp.src(["es6/**/*.js", "public/es6/**/*.js"])
         .pipe(eslint())
         .pipe(eslint.format());
@@ -19,4 +20,5 @@ gulp.task('default', function() {
     gulp.src("public/es6/**/*.js")
         .pipe(babel())
         .pipe(gulp.dest("public/dist"));
+
 });
